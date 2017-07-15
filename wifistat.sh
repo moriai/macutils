@@ -1,8 +1,21 @@
 #!/bin/sh
 
-TMPFILE=`mktemp` || exit 1
+PLISTFILE=
 
-system_profiler -xml SPAirPortDataType >$TMPFILE
+while [ $# -gt 0 ]; do
+	case "$1" in
+	-f)	shift; PLISTFILE="$1" ;;
+	*)	break ;;
+	esac
+	shift
+done
+
+case "$PLISTFILE" in
+'')	TMPFILE=`mktemp` || exit 1
+	system_profiler -xml SPAirPortDataType >$TMPFILE
+	PLISTFILE=$TMPFILE
+	;;
+esac
 
 cur=":0:_items:0:spairport_airport_interfaces:0:spairport_current_network_information:"
 oth=":0:_items:0:spairport_airport_interfaces:0:spairport_airport_other_local_wireless_networks:"
@@ -30,7 +43,8 @@ BEGIN {
 }
 '
 
-PlistBuddy -c "print $cur" -c "print $oth" $TMPFILE | awk "$prog"
+PlistBuddy -c "print $cur" -c "print $oth" $PLISTFILE | awk "$prog"
 
-rm -f $TMPFILE
-
+if [ -e $TMPFILE ]; then
+	rm -f $TMPFILE
+fi
