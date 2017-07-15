@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # pylint: disable=C0103,C0111,C0410
 
-import os, sys, errno
+import os, sys
+#import errno
 import commands, tempfile, xattr
 
 argv = sys.argv
@@ -17,7 +18,7 @@ for path in argv[1:]:
     try:
         attr = xattr.getxattr(path, 'com.apple.metadata:kMDItemWhereFroms')
     except IOError as err:
-        if err.errno == 93:
+        if err.errno == 93: #ENOATTR
             print path
         else:
             print >>sys.stderr, '{}: {}: {}'.format(prog, path, err.strerror)
