@@ -6,8 +6,7 @@ system_profiler -xml SPAirPortDataType >$TMPFILE
 
 cur=":0:_items:0:spairport_airport_interfaces:0:spairport_current_network_information:"
 oth=":0:_items:0:spairport_airport_interfaces:0:spairport_airport_other_local_wireless_networks:"
-
-PlistBuddy -c "print $cur" -c "print $oth" $TMPFILE | awk '
+prog='
 BEGIN {
 	dict = 0
 }
@@ -30,6 +29,8 @@ BEGIN {
 	}
 }
 '
+
+PlistBuddy -c "print $cur" -c "print $oth" $TMPFILE | awk "$prog"
 
 rm -f $TMPFILE
 
