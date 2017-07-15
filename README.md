@@ -1,0 +1,2 @@
+# macutils
+Utilities for macOS
