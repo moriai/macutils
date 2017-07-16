@@ -1,10 +1,14 @@
 #!/bin/sh
 
 PLISTFILE=
+FILTER=cat
 
 while [ $# -gt 0 ]; do
 	case "$1" in
 	-f)	shift; PLISTFILE="$1" ;;
+	-c)	FILTER='sort -bnk1' ;;
+	-s)	FILTER='sort -bnrk2' ;;
+	-h)	echo 'usage: wifistat [-c] [-s] [-f PLISTFILE]'; exit 0 ;;
 	*)	break ;;
 	esac
 	shift
@@ -29,7 +33,7 @@ BEGIN {
 }
 /}/ {
 	if (dict) {
-		print a["spairport_network_channel"], a["_name"], a["spairport_network_bssid"], a["spairport_signal_noise"]
+		printf "%3d %3d %s %s %s\n", a["spairport_network_channel"], a["spairport_signal_noise"], a["spairport_network_bssid"], a["_name"], STAT
 		dict = 0
 	}
 }
@@ -43,7 +47,10 @@ BEGIN {
 }
 '
 
-PlistBuddy -c "print $cur" -c "print $oth" $PLISTFILE | awk "$prog"
+{
+	PlistBuddy -c "print $cur" $PLISTFILE | awk -v STAT='*' "$prog"
+	PlistBuddy -c "print $oth" $PLISTFILE | awk -v STAT=' ' "$prog"
+} | $FILTER
 
 if [ -e $TMPFILE ]; then
 	rm -f $TMPFILE
