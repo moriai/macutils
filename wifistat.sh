@@ -1,5 +1,6 @@
 #!/bin/sh
 
+PROGNAME=wifistat
 PLISTFILE=
 FILTER=cat
 
@@ -8,14 +9,14 @@ while [ $# -gt 0 ]; do
 	-f)	shift; PLISTFILE="$1" ;;
 	-c)	FILTER='sort -bnk1' ;;
 	-s)	FILTER='sort -bnrk2' ;;
-	-h)	echo 'usage: wifistat [-c] [-s] [-f PLISTFILE]'; exit 0 ;;
+	-h)	echo "usage: $PROGNAME [-c] [-s] [-f PLISTFILE]"; exit 0 ;;
 	*)	break ;;
 	esac
 	shift
 done
 
 case "$PLISTFILE" in
-'')	TMPFILE=`mktemp` || exit 1
+'')	TMPFILE=`mktemp -t $PROGNAME` || exit 1
 	system_profiler -xml SPAirPortDataType >$TMPFILE
 	PLISTFILE=$TMPFILE
 	;;
