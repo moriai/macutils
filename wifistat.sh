@@ -34,7 +34,7 @@ BEGIN {
 }
 /}/ {
 	if (dict) {
-		printf "%3d %3d %s %s %s\n", a["spairport_network_channel"], a["spairport_signal_noise"], a["spairport_network_bssid"], a["_name"], STAT
+		printf "%3d %3d %s %s %s %s\n", a["spairport_network_channel"], a["spairport_signal_noise"], a["spairport_network_bssid"], substr(a["spairport_network_phymode"],7), a["_name"], STAT
 		dict = 0
 	}
 }
