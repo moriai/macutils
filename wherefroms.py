@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 # pylint: disable=C0103,C0111,C0410
 
 import os, sys
@@ -25,8 +25,9 @@ for path in argv[1:]:
             errcnt += 1
         continue
     except:
-        print >>sys.stderr, '{}: {}: {}'.format(prog, path, sys.exc_info())
-        errcnt += 1
+#       print >>sys.stderr, '{}: {}: {}'.format(prog, path, sys.exc_info())
+#       errcnt += 1
+        print path
         continue
 
     tmpf = tempfile.mkstemp(suffix='.plist')
