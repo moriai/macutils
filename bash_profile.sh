@@ -18,3 +18,7 @@ function popd() {
 function openman() {
 	open x-man-page://$@
 }
+
+function calc() {
+	echo "$@" | bc -lq
+}
