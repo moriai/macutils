@@ -3,6 +3,8 @@ if [ -r $HOME/.profile ]; then
 	. $HOME/.profile
 fi
 
+PS1='\h:\W \$ '
+
 function dirs() {
 	command dirs -v $@
 }
