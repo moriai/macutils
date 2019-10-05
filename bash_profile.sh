@@ -6,21 +6,25 @@ fi
 PS1='\h:\W \$ '
 
 function dirs() {
-	command dirs -v $@
+	command dirs -v "$@"
 }
 
 function pushd() {
-	command pushd $@ >/dev/null ; dirs
+	command pushd "$@" >/dev/null ; dirs
 }
 
 function popd() {
-	command popd $@ >/dev/null; dirs
+	command popd "$@" >/dev/null; dirs
 }
 
 function openman() {
-	open x-man-page://$@
+	open x-man-page://"$@"
 }
 
 function calc() {
 	echo "$@" | bc -lq
 }
+
+if [ -r $HOME/.bash_profile_local ]; then
+	. $HOME/.bash_profile_local
+fi
