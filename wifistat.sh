@@ -34,7 +34,7 @@ BEGIN {
 }
 /}/ {
 	if (dict) {
-		printf "%3d %3d %s %s %s %s\n", a["spairport_network_channel"], a["spairport_signal_noise"], a["spairport_network_bssid"], substr(a["spairport_network_phymode"],7), a["_name"], STAT
+		printf "%3d %2s %3d %s %s %s %s\n", a["spairport_network_channel"], a["spairport_network_channel_width"], a["spairport_signal_noise"], a["spairport_network_bssid"], substr(a["spairport_network_phymode"],7), a["_name"], STAT
 		dict = 0
 	}
 }
@@ -42,6 +42,7 @@ BEGIN {
 	if ($1 == "spairport_network_channel") {
 		split($3, ch, ",")
 		a[$1] = ch[1]
+		a["spairport_network_channel_width"] = ch[2]
 	} else {
 		a[$1] = $3
 	}
