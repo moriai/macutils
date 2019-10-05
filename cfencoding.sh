@@ -1,13 +1,12 @@
 #!/bin/bash
-# $Source: /home/moriai/cvsroot/src/utils/cfencoding.sh,v $
-# $Id: cfencoding.sh,v 1.4 2007-05-14 10:30:48 moriai Exp $
 
 CFENCODINGFILE=~/.CFUserTextEncoding
+PROGNAME="$0"
 
 case $# in
 0)
 	echo -n 'Init '
-	cat $CFENCODINGFILE
+	cat ${CFENCODINGFILE}
 	echo
 	echo -n 'Env '
 	echo ${__CF_USER_TEXT_ENCODING}
@@ -24,7 +23,7 @@ esac
 
 case $# in
 1)
-	echo -n $ENCODING >$CFENCODINGFILE
+	echo -n ${ENCODING} >${CFENCODINGFILE}
 	exit 0
 	;;
 *)
