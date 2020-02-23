@@ -22,7 +22,7 @@ case $# in
 		kill -CONT -`supervisor_pid`
 		;;
 	supervisor)
-		echo `get_supervisor_id`
+		echo `supervisor_pid`
 		;;
 	*)
 		echo "$USAGE"
