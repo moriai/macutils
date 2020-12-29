@@ -1,16 +1,15 @@
 #!/bin/bash
 
 vers=($(sw_vers -productVersion | sed 's/\./ /g'))
+vernum=$(printf "%d%02d" ${vers[0]} ${vers[1]})
 
-case ${vers[0]} in
-10)	;;
-*)	echo "$0: unsupported macOS version"; exit 1 ;;
-esac
-
-if [[ ${vers[1]} -ge 10 ]]; then
+if [ $vernum -ge 1010 ]; then
 	defaults write com.apple.dock ResetLaunchPad -bool true
-else
+elif [ $vernum -ge 1000 ]; then
 	rm -f "$HOME/Library/Application Support/Dock/"*.db
-fi 
+else
+	echo "$0: unsupported macOS version"
+	exit 1
+fi
 
 killall Dock
